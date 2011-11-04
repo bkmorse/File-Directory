@@ -31,6 +31,9 @@ class File_directory {
 	{
 		// make a local reference to the ExpressionEngine super object
 		$this->EE =& get_instance();
+		$this->EE->load->helper('file');
+		$this->EE->load->helper('url');
+		
 		$directory = ($this->EE->TMPL->fetch_param('directory') !== false) ? $this->EE->TMPL->fetch_param('directory') : "";
 		$wrap = ($this->EE->TMPL->fetch_param('wrap') !== false) ? $this->EE->TMPL->fetch_param('wrap') : "";
     
@@ -38,16 +41,16 @@ class File_directory {
 
     if($directory) {
   		//get all files within directory
-      $files = glob($directory);
-    
-      //print each file name
-      foreach($files as $file):
-       if($wrap != '') {
-       $return_data .= '<'.$wrap.'><a href="'.$file.'"></'.$wrap.'>'.$file.'</a></'.$wrap.'>';
-       } else {
-         $return_data .= '<a href="'.$file.'">'.$file.'</a>';
-       }
-      endforeach;
+      $files = glob($directory . "*.*");
+      $file_names = get_filenames($directory);
+      
+      foreach($file_names as $file):
+        if($wrap != '') {
+          $return_data .= '<'.$wrap.'>'.anchor($directory.$file, $file).'</'.$wrap.'>';
+        } else {
+          $return_data .= anchor($directory.$file, $file);
+        }
+      endforeach; 
 
   		$this->return_data = $return_data;
     }
