@@ -44,16 +44,13 @@ class File_directory {
 		
     if($directory_exists) {
   		//get all files within directory
-      $files = glob($directory . "*.*");
-      //$file_names = get_filenames($directory);
-      
 			$file_names = get_dir_file_info($directory, TRUE);
 
 			foreach($file_names as $file):
         if($wrap != '') {
-          $return_data .= '<'.$wrap.'>'.anchor($file['relative_path'].$file['name'], $file['name']).'</'.$wrap.'>';
+          $return_data .= '<'.$wrap.'>'.anchor($this->EE->config->item('base_url').$file['relative_path'].$file['name'], $file['name']).'</'.$wrap.'>';
         } else {
-          $return_data .= anchor($file['relative_path'].$file['name'], $file['name']);
+          $return_data .= anchor($this->EE->config->item('base_url').$file['relative_path'].$file['name'], $file['name']);
         }
       endforeach; 
 
