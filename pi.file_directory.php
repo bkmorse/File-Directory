@@ -32,14 +32,17 @@ class File_directory {
 		// make a local reference to the ExpressionEngine super object
 		$this->EE =& get_instance();
 		$this->EE->load->helper('file');
+		$this->EE->load->helper('path');
 		$this->EE->load->helper('url');
 		
 		$directory = ($this->EE->TMPL->fetch_param('directory') !== false) ? $this->EE->TMPL->fetch_param('directory') : "";
 		$wrap = ($this->EE->TMPL->fetch_param('wrap') !== false) ? $this->EE->TMPL->fetch_param('wrap') : "";
     
     $return_data = '';
-
-    if($directory) {
+		
+		$directory_exists = set_realpath($directory, TRUE);
+		
+    if($directory_exists) {
   		//get all files within directory
       $files = glob($directory . "*.*");
       //$file_names = get_filenames($directory);
@@ -55,7 +58,6 @@ class File_directory {
       endforeach; 
 
   		$this->return_data = $return_data;
-
 		}
 	}
 	/* END */
