@@ -2,9 +2,10 @@ Outputs all files onto page from a directory/folder on your server
 
 Use as follows:
 
-{exp:file_directory directory="/path/to/folder" wrap=""}
+{exp:file_directory directory="path/to/folder/" wrap=""}
 
-directory (required) - absolute or relative path to folder of files you want to display
+directory (required) - path starts at web root of your website, so it begins at the same level that your system folder does,
+also do not start the path with a '/' at the beginning, only at the end '/', as seen above in the directory parameter
 
 wrap (optional) - put within paragraph, div or span tags, see below
 
