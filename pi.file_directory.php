@@ -12,7 +12,7 @@
 
 $plugin_info = array(
 	'pi_name'			=> 'File Directory',
-	'pi_version'		=> '1.0.0',
+	'pi_version'		=> '1.0.1',
 	'pi_author'		=> 'Brad Morse',
 	'pi_author_url'	=> 'http://bkmorse.com',
 	'pi_description'	=> 'Displays all files from within a folder/directory on your server',
@@ -42,18 +42,21 @@ class File_directory {
     if($directory) {
   		//get all files within directory
       $files = glob($directory . "*.*");
-      $file_names = get_filenames($directory);
+      //$file_names = get_filenames($directory);
       
-      foreach($file_names as $file):
+			$file_names = get_dir_file_info($directory, TRUE);
+
+			foreach($file_names as $file):
         if($wrap != '') {
-          $return_data .= '<'.$wrap.'>'.anchor($directory.$file, $file).'</'.$wrap.'>';
+          $return_data .= '<'.$wrap.'>'.anchor($file['relative_path'].$file['name'], $file['name']).'</'.$wrap.'>';
         } else {
-          $return_data .= anchor($directory.$file, $file);
+          $return_data .= anchor($file['relative_path'].$file['name'], $file['name']);
         }
       endforeach; 
 
   		$this->return_data = $return_data;
-    }
+
+		}
 	}
 	/* END */
 	
